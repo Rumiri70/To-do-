@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* Light gray background for the entire page */
+        }
+        .navbar {
+            background-color: #2c3e50; /* Dark blue-gray navbar background */
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s; /* Smooth transition for hover */
+        }
+        .navbar a:hover {
+            background-color: #1abc9c; /* Green hover effect for nav links */
+            color: white;
+        }
+        .content {
+            padding: 30px;
+            background-color: #ffffff; /* White background for content areas */
+            margin: 20px; /* Margin to separate content from edges */
+            border-radius: 10px; /* Rounded corners for content */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        .hidden {
+            display: none;
+        }
+        /* Responsive Grid for Cards */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .card {
+            background-color: #3498db; /* Blue background for cards */
+            color: white; /* White text for better readability */
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+            flex: 1 1 calc(33.333% - 20px);
+            box-sizing: border-box;
+            transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+        }
+        .card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+        }
+        /* Tablet */
+        @media screen and (max-width: 768px) {
+            .card {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+        /* Mobile */
+        @media screen and (max-width: 480px) {
+            .card {
+                flex: 1 1 100%;
+            }
+        }
+        /* To-Do List Input Styling */
+        #taskInput {
+            padding: 10px;
+            width: calc(100% - 120px);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #1abc9c; /* Green button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #16a085; /* Darker green on hover */
+        }
+        #taskList li {
+            list-style: none;
+            background-color: #ecf0f1; /* Light gray for tasks */
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #taskList li:hover {
+            background-color: #dcdde1; /* Slightly darker gray on hover */
+        }
+        /* Modal Styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 400px; /* Max width */
+            border-radius: 8px; /* Rounded corners */
+        }
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .modal button {
+            padding: 10px 20px;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: calc(50% - 10px);
+            margin: 5px;
+        }
+        .modal button.delete-btn {
+            background-color: #e74c3c; /* Red button for delete */
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('second-page')">Second Page</a>
+</div>
+
+<div id="home" class="content">
+    <h2>To Do List</h2>
+    <div>
+        <input type="text" id="taskInput" placeholder="New Task">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="taskList"></ul>
+</div>
+
+<div id="second-page" class="content hidden">
+    <h2>Responsive Cards</h2>
+    <div class="card-container">
+        <div class="card">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="card">
+            <p>Phasellus vitae magna at lacus tempor fermentum.</p>
+        </div>
+        <div class="card">
+            <p>Vivamus scelerisque eros a magna fermentum dignissim.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Task Update or Delete -->
+<div id="updateModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Update or Delete Task</h2>
+        <input type="text" id="updateTaskInput">
+        <button onclick="saveTaskUpdate()">Update</button>
+        <button class="delete-btn" onclick="deleteTask()">Delete</button>
+    </div>
+</div>
+
+<script>
+    let selectedTask; // To keep track of the selected task item
+
+    function showPage(pageId) {
+        document.getElementById('home').classList.add('hidden');
+        document.getElementById('second-page').classList.add('hidden');
+        document.getElementById(pageId).classList.remove('hidden');
+    }
+
+    function addTask() {
+        const taskInput = document.getElementById('taskInput');
+        const taskList = document.getElementById('taskList');
+
+        if (taskInput.value.trim() !== '') {
+            const li = document.createElement('li');
+            li.textContent = taskInput.value;
+            li.onclick = function() {
+                openModal(li);
+            };
+            taskList.appendChild(li);
+            taskInput.value = '';
+        }
+    }
+
+    function openModal(taskItem) {
+        selectedTask = taskItem; // Store the clicked task item
+        document.getElementById('updateTaskInput').value = taskItem.textContent;
+        document.getElementById('updateModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('updateModal').style.display = 'none';
+    }
+
+    function saveTaskUpdate() {
+        const updateTaskInput = document.getElementById('updateTaskInput').value;
+        if (updateTaskInput.trim() !== '') {
+            selectedTask.textContent = updateTaskInput; // Update the task
+            closeModal();
+        }
+    }
+
+    function deleteTask() {
+        selectedTask.remove(); // Remove the task
+        closeModal();
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('updateModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>
